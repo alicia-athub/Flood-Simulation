@@ -7,10 +7,11 @@ import numpy as np
 import pygame_widgets
 from pygame_widgets.button import Button
 from pygame_widgets.dropdown import Dropdown
-    
+
 #Set up screen
 pygame.init()
 screen = pygame.display.set_mode((1520,900), pygame.RESIZABLE) # update on 19/11/24 to enable manually resizing of Pygame window
+#win = pygame.display.set_mode((400, 280))
 pygame.display.set_caption("Laoise's Flood Model")  
 
 #Set up grid
@@ -38,37 +39,40 @@ for y in range(height-100):
             l = np.sqrt(((cx-x) * (cx-x)) + ((cy-y) * (cy-y))) # distance x, y is from mountain peak
             f = 1 * (1 - np.exp(-0.5*((l/c)*(l/c)))) # height of mountain at x, y
             de_grid[x][y] = f + 10
-            
+
+
 dropdown = Dropdown(
-    name='Select Color',
+    screen, 150, 750, 108, 50, name='Select Location',
     choices=[
-        'Red',
-        'Blue',
-        'Yellow',
+        'Cork City',
+        'Whitegate',
+        'Cobh',
+        'Youghal',
     ],
-    borderRadius=3, colour=pygame.Color('green'), values=[1, 2, 'true'], direction='down', textHAlign='left'
+    borderRadius=3, colour=pygame.Color('green'), values=[1, 2, 3, 'true'], direction='down', textHAlign='left'
 )
 
 
 def print_value():
     print(dropdown.getSelected())
+    
 
-
+# Print Value Button
 button = Button(
-    text='Print Value', fontSize=30,
-    margin=20, inactiveColour=(255, 0, 0), pressedColour=(0, 255, 0),
+    screen, 450, 750, 100, 50, text='Print Value', fontSize=30,
+    margin=20, inactiveColour=(0, 0, 255), pressedColour=(0, 0, 0),
     radius=5, onClick=print_value, font=pygame.font.SysFont('calibri', 10),
     textVAlign='bottom'
 )
 
-#Button properties
+#Run Button properties for Flood Model
 font = pygame.font.Font(None, 50)
 button_surface = pygame.Surface((100, 100))
 text = font.render("Run", True, (0,0,255))
 text_rect = text.get_rect(center=(button_surface.get_width()/2, button_surface.get_height()/2))
 button_rect = pygame.Rect(300, 750, 200, 200)
 
-#Button properties for Elevation Map   19/11/24 
+#Run Button properties for Elevation Map   19/11/24 
 font = pygame.font.Font(None, 50)
 button_surface_el = pygame.Surface((100, 100))
 text_el = font.render("Run", True, (0,200,255))
